@@ -11,17 +11,19 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text BestPlayerText;
     public GameObject GameOverText;
     
-    private bool m_Started = false;
+   [SerializeField] private bool m_Started = false;
     private int m_Points;
     
-    private bool m_GameOver = false;
+   [SerializeField] private bool m_GameOver = false;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        BestPlayerText.text = "Best player: " + DataManager.Instance.bestName + " " + DataManager.Instance.highScore;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -72,5 +74,10 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        if((m_Points > DataManager.Instance.highScore))
+        {
+            DataManager.Instance.bestName = DataManager.Instance.playerName;
+            DataManager.Instance.highScore = m_Points;
+        }
     }
 }
