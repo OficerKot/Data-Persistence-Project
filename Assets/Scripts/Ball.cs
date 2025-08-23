@@ -14,6 +14,7 @@ public class Ball : MonoBehaviour
     
     private void OnCollisionExit(Collision other)
     {
+        SoundManager.instance.PlayBallSound();
         var velocity = m_Rigidbody.velocity;
         
         //after a collision we accelerate a bit
@@ -32,5 +33,10 @@ public class Ball : MonoBehaviour
         }
 
         m_Rigidbody.velocity = velocity;
+    }
+
+    private void OnDestroy()
+    {
+        SoundManager.instance.PlayLooseSound();
     }
 }
